@@ -79,6 +79,10 @@ def chat(query):
     say(response)
     memory += f'{response}\n'
     return response
+
+def time():
+    time = datetime.datetime.now().strftime('%H:%M:%S')
+    say(f'Sir, the time is {time}')
     
 if __name__ == '__main__':
     print('hi')
@@ -94,10 +98,13 @@ if __name__ == '__main__':
             elif query.startswith('search') and query.endswith('on google'):
                 google_search(query)
             elif 'what time is it' in query:
-                time = datetime.datetime.now().strftime('%H:%M:%S')
-                say(f'Sir, the time is {time}')
+                time()
             elif 'new prompt' in query:
                 enterPrompt()
+            elif 'jarvis power of' in query:
+                exit()
+            elif 'jarvis clear memory' in  query:
+                memory = ''
             else :
                 print('Chatting')
                 chat(query)
