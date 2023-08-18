@@ -93,13 +93,13 @@ if __name__ == '__main__':
         query = listen()
         query = query.lower()
         if query:
-            if 'play song' in query:
+            if 'jarvis play song' in query:
                 youtube_video(query)
-            elif query.startswith('search') and query.endswith('on google'):
+            elif query.startswith('jarvis search') and query.endswith('on google'):
                 google_search(query)
-            elif 'what time is it' in query:
+            elif 'jarvis what time is it' in query:
                 time()
-            elif 'new prompt' in query:
+            elif 'jarvis new prompt' in query:
                 enterPrompt()
             elif 'jarvis power of' in query:
                 exit()
