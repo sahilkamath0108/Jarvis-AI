@@ -19,14 +19,16 @@ def listen():
     with sr.Microphone() as source:
         r.pause_threshold = 0.5
         try:
-            audio = r.listen(source, timeout=10)  # Wait for up to 10 seconds for input
+            audio = r.listen(source, timeout=20)  # Wait for up to 10 seconds for input
             query = r.recognize_google(audio, language='en-in')
             print(query)
             return query
         except sr.WaitTimeoutError:
-            return ""
+            print('timeout')
+            return 'error'
         except Exception as e:
-            return 'Jarvis system malfunction: ' + str(e)
+            print('malf')
+            return 'error'
         
 def youtube_video(query):
     query = query.replace("play song", "").strip()
@@ -72,13 +74,21 @@ def enterPrompt():
         pyperclip.copy(response)
         say('Copied')
 
-def chat(query):
+def chat():
     global memory
-    memory += f'Sahil : {query}\n Jarvis: '
-    response = promptFile.return_answer(memory)
-    say(response)
-    memory += f'{response}\n'
-    return response
+    count = 0
+    say('What can I help you with?')
+    while count != 1:
+        query = listen().lower()
+        if 'error' in query:
+            continue
+        if 'jarvis quit chatting' in query:
+            count = 1
+        memory += f'Sahil : {query}\n Jarvis: '
+        response = promptFile.return_answer(memory)
+        say(response)
+        memory += f'{response}\n'
+    return 'Nice talking with you sir!'
 
 def time():
     time = datetime.datetime.now().strftime('%H:%M:%S')
@@ -101,10 +111,10 @@ if __name__ == '__main__':
                 time()
             elif 'jarvis new prompt' in query:
                 enterPrompt()
-            elif 'jarvis power of' in query:
+            elif 'jarvis power off' in query:
                 exit()
             elif 'jarvis clear memory' in  query:
                 memory = ''
-            else :
+            elif 'jarvis talk to me' in query:
                 print('Chatting')
-                chat(query)
+                chat()
