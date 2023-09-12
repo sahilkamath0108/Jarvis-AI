@@ -6,6 +6,7 @@ from youtubesearchpython import VideosSearch
 import datetime
 import promptFile
 import pyperclip
+import sentiment
 
 speaker = win32com.client.Dispatch('SAPI.SpVoice')
 
