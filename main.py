@@ -32,7 +32,7 @@ def listen():
             return 'error'
         
 def youtube_video(query):
-    query = query.replace("play song", "").strip()
+    query = query.replace("jarvis play", "").strip()
     query = query.replace(" ", "+")
     search_query = query
     videos_search = VideosSearch(search_query, limit=1)
@@ -104,7 +104,10 @@ if __name__ == '__main__':
         query = listen()
         query = query.lower()
         if query:
-            if 'jarvis play song' in query:
+            if(sentiment.pred_sent(query)['label'] == 'positive' and sentiment.pred_sent(query)['score'] >= 0.9):
+                say("You seem to be in a happy mood sir!")
+                
+            if 'jarvis play' in query:
                 youtube_video(query)
             elif query.startswith('jarvis search') and query.endswith('on google'):
                 google_search(query)
