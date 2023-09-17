@@ -17,7 +17,7 @@ def pred_sent(sentence):
 
 if __name__ == "__main__":
     output = pred_sent({
-	"inputs": "the quality of food was awesome",
+	"inputs": "yeah yeah",
     })
 
     print(output)

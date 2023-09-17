@@ -1,4 +1,3 @@
-#C:\Users\Hp\Desktop
 import os
 
 location_map = {

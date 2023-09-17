@@ -1,2 +1,4 @@
 .env
 update.txt
+prompt_answers
+__pycache__

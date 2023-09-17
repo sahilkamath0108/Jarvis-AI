@@ -6,7 +6,8 @@ from youtubesearchpython import VideosSearch
 import datetime
 import promptFile
 import pyperclip
-import sentiment
+from sentiment import pred_sent
+from open_file import deal_with_query
 
 speaker = win32com.client.Dispatch('SAPI.SpVoice')
 
@@ -46,7 +47,7 @@ def youtube_video(query):
         say("No search results found")
         
 def google_search(query):
-    query = query.replace("search", "").replace("on Google", "").strip()
+    query = query.replace("jarvis search", "").replace("on Google", "").strip()
     search_url = f"https://www.google.com/search?q={query}"
     chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe %s" 
     webbrowser.get(chrome_path).open(search_url, new=2)
@@ -58,10 +59,11 @@ def enterPrompt():
     response = promptFile.return_answer(prompt)
     
     token = response.split()
-    if(len(token) > 20):
-        say('Answer too large to say')
-    else:
+    for i in range(0, 30):
         say(response)
+        
+    if(len(token) > 30):
+        say('Answer too large to say')
     
     if not os.path.exists('prompt_answers'):
         os.mkdir('prompt_answers')
@@ -104,7 +106,9 @@ if __name__ == '__main__':
         query = listen()
         query = query.lower()
         if query:
-            if(sentiment.pred_sent(query)['label'] == 'positive' and sentiment.pred_sent(query)['score'] >= 0.9):
+            sentiment = pred_sent(query)
+            if(sentiment and sentiment['label'] == 'positive' and sentiment['score'] >= 0.9):
+                print(query)
                 say("You seem to be in a happy mood sir!")
                 
             if 'jarvis play' in query:
@@ -116,9 +120,15 @@ if __name__ == '__main__':
             elif 'jarvis new prompt' in query:
                 enterPrompt()
             elif 'jarvis power off' in query:
+                say('Shutting down')
                 exit()
             elif 'jarvis clear memory' in  query:
                 memory = ''
             elif 'jarvis talk to me' in query:
                 print('Chatting')
                 chat()
+            elif 'jarvis open' in query and 'located' in query:
+                deal_with_query(query)
+            else:
+                say('I did not quite catch that, mind repeating it?')
+                
