@@ -1,36 +1,21 @@
-import speech_recognition as sr
 import os
-import win32com.client
 import webbrowser
 from youtubesearchpython import VideosSearch
 import datetime
 import promptFile
 import pyperclip
 from sentiment import pred_sent
-from open_file import deal_with_query
 
-speaker = win32com.client.Dispatch('SAPI.SpVoice')
+#deal with files
+from deal_with_files.open_file import deal_with_query
+from deal_with_files.vecDB import vectorize
+
+#helper modules
+from helpers.listen import listen
+from helpers.say import say
 
 memory = ''
 
-def say(text):
-    speaker.Speak(text)
-
-def listen():
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        r.pause_threshold = 0.5
-        try:
-            audio = r.listen(source, timeout=20)  # Wait for up to 10 seconds for input
-            query = r.recognize_google(audio, language='en-in')
-            print(query)
-            return query
-        except sr.WaitTimeoutError:
-            print('timeout')
-            return 'error'
-        except Exception as e:
-            print('malf')
-            return 'error'
         
 def youtube_video(query):
     query = query.replace("jarvis play", "").strip()
@@ -128,7 +113,14 @@ if __name__ == '__main__':
                 print('Chatting')
                 chat()
             elif 'jarvis open' in query and 'located' in query:
-                deal_with_query(query)
+                path = deal_with_query('Jarvis open pdf offer letter located in Code folder')
+                print(path)
+            elif 'jarvis read' in query and 'located' in query:
+                path = deal_with_query(query)
+                is_vect = vectorize(path)
+                if is_vect:
+                   print('vectorized') 
+                        
             else:
                 say('I did not quite catch that, mind repeating it?')
                 

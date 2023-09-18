@@ -10,13 +10,13 @@ location_map = {
 def location_translate(location):
     return location_map.get(location.lower(), None)
 
-def alternate(query) : 
+def deal_with_query(query) : 
     count = 0
     temp_index = 0
     words = query.lower().split()
     
     for i, word in enumerate(words):
-        if word == "open":
+        if word == "open" or word == 'read':
             start_ind = i+2
             if i + 1 < len(words):
                 file_type = words[i + 1]
@@ -30,7 +30,7 @@ def alternate(query) :
     if file_name and folder_name:
         path = folder_name + f"\{file_name}.{file_type}"
     print(path)  
-    if path:
+    if path and 'open' in query:
         if os.path.exists(path):
             os.startfile(path)
         else:
@@ -38,5 +38,6 @@ def alternate(query) :
 
     return path
 
-
-alternate('Jarvis open pdf offer letter located in Code folder')
+if __name__ == "__main__":
+    deal_with_query('Jarvis open pdf offer letter located in Code folder')
+    #Jarvis open pdf offer letter in Code folder
