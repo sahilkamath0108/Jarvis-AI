@@ -1,5 +1,3 @@
-from helpers.say import say
-from helpers.listen import listen
 from langchain.vectorstores import Chroma
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM 
 from transformers import pipeline
@@ -7,6 +5,8 @@ import torch
 from langchain.llms import HuggingFacePipeline
 from langchain.embeddings import SentenceTransformerEmbeddings
 from langchain.chains import RetrievalQA
+from helpers.listen import listen
+from helpers.say import say
 
 chat_history = []
 
@@ -14,12 +14,16 @@ def ques_ans():
     say('Alright shoot questions at me')
     while True:
         query = listen()
-        if query:
-            for conversation in chat(chat_history, query):
-                chat_history.append(conversation)
-        latest_conversation = chat_history[-1]
-        user_input, bot_response = latest_conversation
-        say(bot_response)
+        if 'malf' in query:
+            continue
+        if 'finish questioning' in query:
+            break
+        else:
+            if query and 'malf' not in query:
+                response = chat(chat_history, query)
+                say(response)
+                say('Next question')
+    return True
             
 
 def chat(chat_history, user_input):
@@ -29,7 +33,8 @@ def chat(chat_history, user_input):
     response = ""
     for letter in ''.join(bot_response):
         response += letter + ""
-        yield chat_history + [(user_input, response)]
+        chat_history = chat_history + [(user_input, response)]
+    return bot_response
 
 checkpoint = "MBZUAI/LaMini-Flan-T5-783M"
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)

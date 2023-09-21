@@ -4,11 +4,12 @@ from youtubesearchpython import VideosSearch
 import datetime
 import promptFile
 import pyperclip
-from sentiment import pred_sent
+from ML.sentiment import pred_sent
 
 #deal with files
 from deal_with_files.open_file import deal_with_query
 from deal_with_files.vecDB import vectorize
+from deal_with_files.performQA import ques_ans
 
 #helper modules
 from helpers.listen import listen
@@ -91,10 +92,10 @@ if __name__ == '__main__':
         query = listen()
         query = query.lower()
         if query:
-            sentiment = pred_sent(query)
-            if(sentiment and sentiment['label'] == 'positive' and sentiment['score'] >= 0.9):
-                print(query)
-                say("You seem to be in a happy mood sir!")
+            # sentiment = pred_sent(query)
+            # if(sentiment and sentiment['label'] == 'positive' and sentiment['score'] >= 0.9):
+            print(query)
+            #     say("You seem to be in a happy mood sir!")
                 
             if 'jarvis play' in query:
                 youtube_video(query)
@@ -113,14 +114,17 @@ if __name__ == '__main__':
                 print('Chatting')
                 chat()
             elif 'jarvis open' in query and 'located' in query:
-                path = deal_with_query('Jarvis open pdf offer letter located in Code folder')
+                path = deal_with_query(query)
                 print(path)
             elif 'jarvis read' in query and 'located' in query:
                 path = deal_with_query(query)
                 is_vect = vectorize(path)
                 if is_vect:
                    print('vectorized') 
+                   done_ques = ques_ans()
+                   continue
+                   
                         
-            else:
+            elif 'malf' not in query:
                 say('I did not quite catch that, mind repeating it?')
                 
