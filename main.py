@@ -45,23 +45,21 @@ def enterPrompt():
     response = promptFile.return_answer(prompt)
     
     token = response.split()
-    for i in range(0, 30):
-        say(response)
+    to_be_said = response.split('.')[0:5]
+    say(to_be_said)
         
     if(len(token) > 30):
-        say('Answer too large to say')
+        say('Would you like to copy the rest of the answer to clipboard?')
+        resp = listen().lower()
+        if resp == 'yes':
+            pyperclip.copy(response)
+            say('Copied')
     
     if not os.path.exists('prompt_answers'):
         os.mkdir('prompt_answers')
     
     with open(f'prompt_answers/{prompt}', 'w') as f:
         f.write(response)
-        
-    say('Would you like to copy the answer to clipboard?')
-    resp = listen().lower()
-    if resp == 'yes':
-        pyperclip.copy(response)
-        say('Copied')
 
 def chat():
     global memory
