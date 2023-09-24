@@ -116,12 +116,16 @@ if __name__ == '__main__':
                 print(path)
             elif 'jarvis read' in query and 'located' in query:
                 path = deal_with_query(query)
-                is_vect = vectorize(path)
-                if is_vect:
-                   print('vectorized') 
-                   done_ques = ques_ans()
-                   continue
-                   
+                if(path):
+                    is_vect = vectorize(path)
+                    if is_vect:
+                       print('vectorized') 
+                       done_ques = ques_ans()
+                    else:
+                        say('System compromised, could nt read file')
+                else:
+                    say('No file found with that name, try again')
+                continue   
                         
             elif 'malf' not in query:
                 say('I did not quite catch that, mind repeating it?')

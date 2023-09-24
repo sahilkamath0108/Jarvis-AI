@@ -36,7 +36,7 @@ def chat(chat_history, user_input):
         chat_history = chat_history + [(user_input, response)]
     return bot_response
 
-checkpoint = "MBZUAI/LaMini-Flan-T5-783M"
+checkpoint = "MBZUAI/LaMini-Flan-T5-783M"     #google/flan-t5-xl  google/flan-t5  MBZUAI/LaMini-Flan-T5-783M
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 base_model = AutoModelForSeq2SeqLM.from_pretrained(
     checkpoint,
