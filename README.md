@@ -2,7 +2,9 @@ J.A.R.V.I.S (Personal AI Assistant)
 J.A.R.V.I.S is a versatile AI assistant designed to streamline interactions through natural language understanding and automation. Here's an overview of the technologies and features integrated into J.A.R.V.I.S:
 
 Technologies Utilized:
-Speech Recognition: Implemented speech recognition using the SpeechRecognition library, allowing for seamless voice-based interactions.
+Image Generation: Implemented Text-to-Image generation using HuggingFace stabilityai/stable-diffusion-xl-base-1.0 model
+
+Speech Recognition: Speech recognition using the SpeechRecognition library, allowing for seamless voice-based interactions.
 
 Natural Language Processing (NLP): Integrated NLP capabilities to understand and respond to natural language queries effectively.
 
@@ -34,3 +36,16 @@ OpenAI models (GPT 3.5, DaVinci)
 Hugging Face models (falcon-7b/40b, google/flan-t5-xl, Roberta, etc)
 Working with vector databases such as ChromaDB
 Developing and fine-tuning Transformer models
+
+# How to use
+Clone the repo and create .env file with your keys for
+OPENAI_API_KEY
+HG_FACE
+
+Few Images generated using diffusion models
+
+![Flying Cars](images/flying car.jpg)
+*Flying Cars*
+
+![Futuristic World](images/futuristic.jpg)
+*Futuristic World*
