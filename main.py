@@ -15,6 +15,9 @@ from deal_with_files.performQA import ques_ans
 from helpers.listen import listen
 from helpers.say import say
 
+#gen image
+from ML import genImage
+
 memory = ''
 
         
@@ -45,13 +48,13 @@ def enterPrompt():
     response = promptFile.return_answer(prompt)
     
     token = response.split()
-    to_be_said = response.split('.')[0:5]
+    to_be_said = response.split('.')[0:3]
     say(to_be_said)
         
     if(len(token) > 30):
         say('Would you like to copy the rest of the answer to clipboard?')
         resp = listen().lower()
-        if resp == 'yes':
+        if resp == 'yes do that':
             pyperclip.copy(response)
             say('Copied')
     
@@ -125,7 +128,11 @@ if __name__ == '__main__':
                         say('System compromised, could nt read file')
                 else:
                     say('No file found with that name, try again')
-                continue   
+                continue 
+            elif 'jarvis generate image' in query:
+                imageGen = genImage.createImage()
+                if imageGen:
+                    say('Image generated and stored succesfully')
                         
             elif 'malf' not in query:
                 say('I did not quite catch that, mind repeating it?')

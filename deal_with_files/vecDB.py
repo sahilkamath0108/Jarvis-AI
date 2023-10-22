@@ -20,5 +20,5 @@ def vectorize(path):
     return True
 
 if __name__ == '__main__':
-    path = "C:\\Users\\Hp\\Desktop\\Code\\offer_letter.pdf"
+    path = "C:\\Users\\Hp\\Desktop\\realmadrid.pdf"
     vectorize(path)

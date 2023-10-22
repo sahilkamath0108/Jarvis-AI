@@ -3,7 +3,7 @@ def listen():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         r.pause_threshold = 0.5
-        audio = r.listen(source, timeout=20)  # Wait for up to 10 seconds for input
+        audio = r.listen(source, timeout=30)  # Wait for up to 10 seconds for input
         try:
             query = r.recognize_google(audio, language='en-in')
             print(query)

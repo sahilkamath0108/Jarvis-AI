@@ -5,8 +5,8 @@ import torch
 from langchain.llms import HuggingFacePipeline
 from langchain.embeddings import SentenceTransformerEmbeddings
 from langchain.chains import RetrievalQA
-from helpers.listen import listen
 from helpers.say import say
+from helpers.listen import listen
 
 chat_history = []
 
