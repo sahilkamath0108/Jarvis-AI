@@ -41,11 +41,12 @@ Developing and fine-tuning Transformer models
 Clone the repo and create .env file with your keys for
 OPENAI_API_KEY
 HG_FACE
+Run main.py , go through the if else conditions to know about what can be done with JARVIS
 
 Few Images generated using diffusion models
 
-![Flying Cars](images/flying car.jpg)
-*Flying Cars*
+![Metaverse](images/metaverse.jpg)
+*Meteaverse*
 
 ![Futuristic World](images/futuristic.jpg)
 *Futuristic World*
